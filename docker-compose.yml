@@ -1,0 +1,16 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: torneos_trabajo_db
+    restart: unless-stopped
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-torneos}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-torneos123}
+      POSTGRES_DB: ${POSTGRES_DB:-torneos_trabajo}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

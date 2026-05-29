@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Sport {
+  futbol
+  padel
+}
+
+enum Mode {
+  masculino
+  femenino
+  mixto
+}
+
+enum OrganizerType {
+  persona
+  dupla
+  equipo
+}
+
+enum MatchType {
+  team_vs_team
+  closed_match
+  open_court
+}
+
+enum FriendlyMatchStatus {
+  buscando_rival
+  rival_interesado
+  juntando_jugadores
+  cupo_minimo_completo
+  cancha_completa
+  cancelado
+}
+
+model RegisteredTeam {
+  id                    String   @id @default(cuid())
+  teamName              String
+  sport                 Sport
+  mode                  Mode
+  category              String
+  area                  String?
+  membersCount          Int
+  representativeName    String
+  representativeContact String
+  representativeArea    String?
+  availability          Json
+  comments              String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@map("registered_teams")
+}
+
+model FriendlyMatch {
+  id               String               @id @default(cuid())
+  sport            Sport
+  mode             Mode
+  category         String
+  organizerName    String
+  organizerContact String
+  organizerType    OrganizerType         @default(persona)
+  matchType        MatchType             @default(team_vs_team)
+  date             String
+  time             String
+  location         String?
+  message          String?
+  status           FriendlyMatchStatus   @default(buscando_rival)
+  rivalName        String?
+  rivalContact     String?
+  rivalMessage     String?
+  minPlayers       Int?
+  maxPlayers       Int?
+  organizerPlays   Boolean               @default(true)
+  participants     OpenCourtParticipant[]
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+
+  @@map("friendly_matches")
+}
+
+model OpenCourtParticipant {
+  id              String        @id @default(cuid())
+  friendlyMatch   FriendlyMatch @relation(fields: [friendlyMatchId], references: [id], onDelete: Cascade)
+  friendlyMatchId String
+  name            String
+  contact         String
+  comment         String?
+  createdAt       DateTime      @default(now())
+
+  @@map("open_court_participants")
+}
