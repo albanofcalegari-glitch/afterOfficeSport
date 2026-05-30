@@ -69,8 +69,8 @@ export const matchesApi = {
     request<FriendlyMatch>('/friendly-matches', { method: 'POST', body: JSON.stringify(data) }),
   updateStatus: (id: string, data: { status: string; rivalName?: string; rivalContact?: string; rivalMessage?: string; verificationContact?: string }) =>
     request<FriendlyMatch>(`/friendly-matches/${id}/status`, { method: 'PATCH', body: JSON.stringify(data) }),
-  delete: (id: string) =>
-    request<void>(`/friendly-matches/${id}`, { method: 'DELETE' }),
+  delete: (id: string, contact: string) =>
+    request<void>(`/friendly-matches/${id}`, { method: 'DELETE', body: JSON.stringify({ contact }) }),
   listParticipants: (id: string) =>
     request<OpenCourtParticipant[]>(`/friendly-matches/${id}/participants`),
   addParticipant: (id: string, data: CreateParticipantDto) =>

@@ -42,6 +42,11 @@ export default function App() {
     refreshMatches()
   }
 
+  async function handleDeleteMatch(id: string, contact: string) {
+    await matchesApi.delete(id, contact)
+    refreshMatches()
+  }
+
   async function handleCreateCourt(data: import('./api/client').CreateMatchDto) {
     await matchesApi.create(data)
     refreshMatches()
@@ -128,7 +133,7 @@ export default function App() {
               <p>Solicitudes esperando confirmación de un rival.</p>
             </div>
           </div>
-          <FriendlyMatchList matches={regularMatches} onInterest={handleInterest} onRevert={handleRevert} />
+          <FriendlyMatchList matches={regularMatches} onInterest={handleInterest} onRevert={handleRevert} onDelete={handleDeleteMatch} />
         </section>
 
         <hr className="section-divider" />

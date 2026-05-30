@@ -92,6 +92,10 @@ friendlyMatchesRouter.post('/:id/verify', async (req, res) => {
 })
 
 friendlyMatchesRouter.delete('/:id', async (req, res) => {
-  await matchesService.deleteMatch(req.params.id)
+  const { contact } = req.body
+  if (!contact || typeof contact !== 'string') {
+    throw new ApiError(400, 'Ingresá tu contacto para verificar tu identidad')
+  }
+  await matchesService.deleteMatch(req.params.id, contact)
   res.status(204).end()
 })

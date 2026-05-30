@@ -143,6 +143,14 @@ export async function updateMatchStatus(id: string, data: UpdateStatusDto) {
   })
 }
 
-export async function deleteMatch(id: string) {
+export async function deleteMatch(id: string, organizerContact: string) {
+  const match = await prisma.friendlyMatch.findUnique({ where: { id } })
+  if (!match) throw new ApiError(404, 'Partido no encontrado')
+  if (match.status !== 'buscando_rival') {
+    throw new ApiError(400, 'Solo se puede eliminar un desafío que todavía no tiene rival')
+  }
+  if (match.organizerContact.toLowerCase() !== organizerContact.trim().toLowerCase()) {
+    throw new ApiError(403, 'El contacto no coincide con el organizador')
+  }
   return prisma.friendlyMatch.delete({ where: { id } })
 }

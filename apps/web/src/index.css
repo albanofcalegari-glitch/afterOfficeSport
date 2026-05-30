@@ -48,21 +48,60 @@ header {
 .brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 18px;
   font-weight: 900;
   letter-spacing: -.03em;
-  font-size: 20px;
+  font-size: 34px;
 }
 
 .logo {
-  width: 42px;
-  height: 42px;
-  border-radius: 14px;
+  width: 80px;
+  height: 80px;
+  border-radius: 20px;
   display: grid;
   place-items: center;
   background: var(--text);
   color: white;
   box-shadow: var(--shadow);
+  padding: 5px;
+}
+
+/* Logo animations */
+.logo-racket {
+  animation: racket-swing 3s ease-in-out infinite;
+}
+.logo-soccer {
+  animation: ball-bounce 2.5s ease-in-out infinite;
+}
+.logo-tennis {
+  animation: tennis-spin 4s linear infinite;
+}
+.logo-spark1 {
+  animation: spark-twinkle 2s ease-in-out infinite;
+}
+.logo-spark2 {
+  animation: spark-twinkle 2s ease-in-out infinite 1s;
+}
+
+@keyframes racket-swing {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(6deg); }
+  75% { transform: rotate(-6deg); }
+}
+
+@keyframes ball-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2.5px); }
+}
+
+@keyframes tennis-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes spark-twinkle {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.5); opacity: 1; }
 }
 
 .top-actions {
@@ -97,6 +136,7 @@ header {
 .btn-dark { background: var(--text); color: white; }
 .btn-orange { background: var(--orange); color: var(--text); box-shadow: 0 12px 24px rgba(255,159,28,.22); }
 .btn-blue { background: var(--blue); color: white; box-shadow: 0 12px 24px rgba(35,116,171,.22); }
+.btn-danger { background: #be123c; color: white; box-shadow: 0 12px 24px rgba(190,18,60,.22); }
 
 main { padding: 0 6vw 60px; }
 
@@ -465,6 +505,16 @@ h2 {
   box-shadow: 0 12px 32px rgba(24, 36, 30, .06);
 }
 
+.request-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.request-card .card-bottom-action {
+  margin-top: auto;
+  padding-top: 10px;
+}
+
 .category-card {
   min-height: 180px;
   display: flex;
@@ -699,9 +749,35 @@ textarea {
 }
 
 .request-card strong {
-  display: block;
   font-size: 19px;
   letter-spacing: -.03em;
+}
+
+.card-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.btn-delete-subtle {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: color .2s, background .2s;
+  white-space: nowrap;
+  opacity: 0.6;
+}
+
+.btn-delete-subtle:hover {
+  color: #be123c;
+  background: #fef2f2;
+  opacity: 1;
 }
 
 /* Success message */

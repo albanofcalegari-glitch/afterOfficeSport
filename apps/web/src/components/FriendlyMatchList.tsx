@@ -7,9 +7,10 @@ interface Props {
   matches: FriendlyMatch[]
   onInterest: (id: string, data: { rivalName: string; rivalContact: string; rivalMessage?: string }) => Promise<void>
   onRevert: (id: string, verificationContact: string) => Promise<void>
+  onDelete: (id: string, contact: string) => Promise<void>
 }
 
-export default function FriendlyMatchList({ matches, onInterest, onRevert }: Props) {
+export default function FriendlyMatchList({ matches, onInterest, onRevert, onDelete }: Props) {
   return (
     <div>
       <div className="info-banner">
@@ -23,7 +24,7 @@ export default function FriendlyMatchList({ matches, onInterest, onRevert }: Pro
       ) : (
         <div className="requests">
           {matches.map(match => (
-            <FriendlyMatchCard key={match.id} match={match} onInterest={onInterest} onRevert={onRevert} />
+            <FriendlyMatchCard key={match.id} match={match} onInterest={onInterest} onRevert={onRevert} onDelete={onDelete} />
           ))}
         </div>
       )}
@@ -31,19 +32,22 @@ export default function FriendlyMatchList({ matches, onInterest, onRevert }: Pro
   )
 }
 
-function FriendlyMatchCard({ match, onInterest, onRevert }: {
+function FriendlyMatchCard({ match, onInterest, onRevert, onDelete }: {
   match: FriendlyMatch
   onInterest: Props['onInterest']
   onRevert: Props['onRevert']
+  onDelete: Props['onDelete']
 }) {
   const [showInterestForm, setShowInterestForm] = useState(false)
   const [showVerify, setShowVerify] = useState(false)
   const [showRevert, setShowRevert] = useState(false)
+  const [showDelete, setShowDelete] = useState(false)
   const [name, setName] = useState('')
   const [contact, setContact] = useState('')
   const [message, setMessage] = useState('')
   const [verifyContact, setVerifyContact] = useState('')
   const [revertContact, setRevertContact] = useState('')
+  const [deleteContact, setDeleteContact] = useState('')
   const [revealedData, setRevealedData] = useState<{ role: string; organizerContact: string; rivalContact: string | null } | null>(null)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -89,6 +93,18 @@ function FriendlyMatchCard({ match, onInterest, onRevert }: {
     } finally { setLoading(false) }
   }
 
+  async function handleDelete(e: React.FormEvent) {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+    try {
+      await onDelete(match.id, deleteContact.trim())
+      setShowDelete(false); setDeleteContact('')
+    } catch (err: any) {
+      setError(err.message || 'No se pudo eliminar')
+    } finally { setLoading(false) }
+  }
+
   return (
     <article className="request-card">
       <div className="topline">
@@ -97,14 +113,33 @@ function FriendlyMatchCard({ match, onInterest, onRevert }: {
         </span>
         <span>{getSportIcon(match.sport)}</span>
       </div>
-      <strong>{match.organizerName}</strong>
+      <div className="card-name-row">
+        <strong>{match.organizerName}</strong>
+        {match.status === 'buscando_rival' && !showInterestForm && !showDelete && (
+          <button className="btn-delete-subtle" onClick={() => { setShowDelete(true); setError('') }}>🗑 Eliminar</button>
+        )}
+      </div>
       <p>{match.category} {displayMode(match.mode)} · {match.date} {match.time}</p>
       {match.location && <p>📍 {match.location}</p>}
       {match.message && <p>{match.message}</p>}
 
       {/* BUSCANDO RIVAL */}
-      {match.status === 'buscando_rival' && !showInterestForm && (
-        <button className="btn btn-secondary" onClick={() => setShowInterestForm(true)}>Me interesa</button>
+      {match.status === 'buscando_rival' && !showInterestForm && !showDelete && (
+        <div className="card-bottom-action">
+          <button className="btn btn-primary" onClick={() => setShowInterestForm(true)}>Me interesa</button>
+        </div>
+      )}
+
+      {match.status === 'buscando_rival' && showDelete && (
+        <form className="join-form" onSubmit={handleDelete} style={{ marginTop: 10 }}>
+          <div className="form-section-label">¿Sos el organizador? Verificá tu identidad</div>
+          <label>Tu mail o WhatsApp<input type="text" placeholder="El que usaste al publicar" required value={deleteContact} onChange={e => { setDeleteContact(e.target.value); setError('') }} /></label>
+          {error && <p style={{ color: '#be123c', fontSize: 13, margin: 0 }}>⚠️ {error}</p>}
+          <div className="top-actions" style={{ justifyContent: 'flex-start' }}>
+            <button className="btn btn-danger" type="submit" disabled={loading} style={{ fontSize: 13 }}>{loading ? 'Eliminando...' : 'Confirmar eliminación'}</button>
+            <button className="btn btn-secondary" type="button" style={{ fontSize: 13 }} onClick={() => { setShowDelete(false); setError('') }}>Cancelar</button>
+          </div>
+        </form>
       )}
 
       {match.status === 'buscando_rival' && showInterestForm && (
