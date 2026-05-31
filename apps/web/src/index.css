@@ -43,6 +43,7 @@ header {
   justify-content: space-between;
   align-items: center;
   gap: 18px;
+  flex-wrap: wrap;
 }
 
 .brand {
@@ -109,6 +110,20 @@ header {
   gap: 10px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
+}
+
+.header-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.header-nav .btn {
+  padding: 10px 14px;
+  font-size: 14px;
+  white-space: nowrap;
 }
 
 /* Buttons */
@@ -170,6 +185,13 @@ main { padding: 0 6vw 60px; }
   background: rgba(34, 160, 107, .12);
   right: -70px;
   bottom: -70px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: nowrap;
 }
 
 .eyebrow {
@@ -935,6 +957,29 @@ footer {
   header {
     align-items: flex-start;
     flex-direction: column;
+    padding: 20px 5vw 14px;
+  }
+  .brand {
+    font-size: 24px;
+    gap: 12px;
+  }
+  .logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+  .logo svg {
+    width: 44px;
+    height: 44px;
+  }
+  .header-nav {
+    flex-wrap: wrap;
+    gap: 6px;
+    width: 100%;
+  }
+  .header-nav .btn {
+    padding: 8px 12px;
+    font-size: 13px;
   }
   .top-actions { justify-content: flex-start; }
   .tabs,
@@ -947,8 +992,16 @@ footer {
     align-items: flex-start;
     flex-direction: column;
   }
-  .hero-card,
+  .hero-card {
+    border-radius: 28px;
+    padding: clamp(20px, 5vw, 36px);
+  }
+  .hero-card h1 { font-size: 36px; }
   .side-card { border-radius: 28px; }
+  .hero-actions { flex-wrap: wrap; justify-content: flex-start; }
+  .hero-actions .btn { font-size: 14px; }
+  .action-card h3 { font-size: 20px; }
+  .action-icon { font-size: 36px; }
   .filters {
     flex-direction: column;
     align-items: stretch;
@@ -957,4 +1010,6 @@ footer {
     width: 100%;
     min-width: auto;
   }
+  section { padding: 0 5vw; }
+  .section-head h2 { font-size: 22px; }
 }

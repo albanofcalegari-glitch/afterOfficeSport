@@ -1,4 +1,4 @@
-export type Sport = 'futbol' | 'padel'
+export type Sport = 'futbol' | 'padel' | 'tenis' | 'karting'
 export type Mode = 'masculino' | 'femenino' | 'mixto'
 export type OrganizerType = 'persona' | 'dupla' | 'equipo'
 export type MatchType = 'team_vs_team' | 'closed_match' | 'open_court'

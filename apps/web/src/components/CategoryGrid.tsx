@@ -1,5 +1,5 @@
 import type { Sport, Mode } from '../types'
-import { footballCategories, padelCategories, displayMode } from '../data/options'
+import { footballCategories, padelCategories, tennisCategories, kartingCategories, displayMode, getSportIcon } from '../data/options'
 
 interface CategoryGridProps {
   sport: Sport
@@ -8,8 +8,9 @@ interface CategoryGridProps {
 }
 
 export default function CategoryGrid({ sport, mode, onSelectCategory }: CategoryGridProps) {
-  const categories = sport === 'futbol' ? footballCategories : padelCategories
-  const icon = sport === 'futbol' ? '⚽' : '🎾'
+  const categoriesMap = { futbol: footballCategories, padel: padelCategories, tenis: tennisCategories, karting: kartingCategories }
+  const categories = categoriesMap[sport]
+  const icon = getSportIcon(sport)
 
   function handleClick(categoryTitle: string) {
     if (onSelectCategory) {

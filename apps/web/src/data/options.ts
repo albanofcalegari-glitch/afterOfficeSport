@@ -1,4 +1,4 @@
-import type { Sport, Mode, Availability } from '../types'
+import type { Sport, Mode, MatchType, Availability } from '../types'
 
 export interface CategoryItem {
   title: string
@@ -20,6 +20,17 @@ export const padelCategories: CategoryItem[] = [
   { title: 'Busco dupla', desc: 'Espacio para quienes quieren jugar pero todavía no tienen pareja.', tags: ['Matchmaking', 'Mixto', 'Flexible'] },
 ]
 
+export const tennisCategories: CategoryItem[] = [
+  { title: 'Tenis singles', desc: 'Partido individual, mano a mano en la cancha.', tags: ['1 vs 1', 'Individual', 'Competitivo'] },
+  { title: 'Tenis dobles', desc: 'Duplas enfrentadas, más estrategia y juego en equipo.', tags: ['2 vs 2', 'Duplas', 'Social'] },
+  { title: 'Busco rival', desc: 'Tenés cancha y horario pero te falta rival. Publicá y encontralo.', tags: ['Matchmaking', 'Flexible', 'Cualquier nivel'] },
+]
+
+export const kartingCategories: CategoryItem[] = [
+  { title: 'Karting recreativo', desc: 'Carrera entre amigos o compañeros de trabajo, sin presión.', tags: ['Hasta 20 pilotos', 'Social', 'After office'] },
+  { title: 'Karting competitivo', desc: 'Carrera con tiempos, clasificación y podio.', tags: ['Hasta 20 pilotos', 'Ranking', 'Cronometrado'] },
+]
+
 export interface TabItem {
   sport: Sport
   mode: Mode
@@ -34,11 +45,19 @@ export const sportTabs: TabItem[] = [
   { sport: 'padel', mode: 'masculino', label: 'Pádel masculino', sub: 'Por nivel' },
   { sport: 'padel', mode: 'femenino', label: 'Pádel femenino', sub: 'Por nivel' },
   { sport: 'padel', mode: 'mixto', label: 'Pádel mixto', sub: 'Por nivel' },
+  { sport: 'tenis', mode: 'masculino', label: 'Tenis masculino', sub: 'Singles, Dobles' },
+  { sport: 'tenis', mode: 'femenino', label: 'Tenis femenino', sub: 'Singles, Dobles' },
+  { sport: 'tenis', mode: 'mixto', label: 'Tenis mixto', sub: 'Singles, Dobles' },
+  { sport: 'karting', mode: 'masculino', label: 'Karting masculino', sub: 'Hasta 20 pilotos' },
+  { sport: 'karting', mode: 'femenino', label: 'Karting femenino', sub: 'Hasta 20 pilotos' },
+  { sport: 'karting', mode: 'mixto', label: 'Karting mixto', sub: 'Hasta 20 pilotos' },
 ]
 
 export const footballCategoryOptions = ['Fútbol 5', 'Fútbol 6', 'Fútbol 8', 'Fútbol 11']
 export const padelCategoryOptions = ['Pádel inicial', 'Pádel intermedio', 'Pádel avanzado']
-export const allCategoryOptions = [...footballCategoryOptions, ...padelCategoryOptions]
+export const tennisCategoryOptions = ['Tenis singles', 'Tenis dobles', 'Busco rival']
+export const kartingCategoryOptions = ['Karting recreativo', 'Karting competitivo']
+export const allCategoryOptions = [...footballCategoryOptions, ...padelCategoryOptions, ...tennisCategoryOptions, ...kartingCategoryOptions]
 
 export const availabilityOptions: { value: Availability; label: string }[] = [
   { value: 'lunes-viernes', label: 'Lunes a viernes' },
@@ -55,12 +74,42 @@ export function displayMode(mode: Mode): string {
 }
 
 export function displaySport(sport: Sport): string {
-  return sport === 'futbol' ? 'Fútbol' : 'Pádel'
+  const map: Record<Sport, string> = { futbol: 'Fútbol', padel: 'Pádel', tenis: 'Tenis', karting: 'Karting' }
+  return map[sport]
 }
 
 export function getSportIcon(sport: string): string {
   const s = sport.toLowerCase()
-  return s.includes('fút') || s.includes('fut') || s === 'futbol' ? '⚽' : '🎾'
+  if (s.includes('fút') || s.includes('fut') || s === 'futbol') return '⚽'
+  if (s.includes('kart')) return '🏎️'
+  if (s.includes('teni')) return '🎾'
+  if (s.includes('páde') || s === 'padel') return '🏸'
+  return '⚽'
+}
+
+export function getCategoryOptionsForSport(sport: Sport): string[] {
+  const map: Record<Sport, string[]> = {
+    futbol: footballCategoryOptions,
+    padel: padelCategoryOptions,
+    tenis: tennisCategoryOptions,
+    karting: kartingCategoryOptions,
+  }
+  return map[sport]
+}
+
+export function getDefaultCategory(sport: Sport): string {
+  return getCategoryOptionsForSport(sport)[0]
+}
+
+export function getDefaultMatchType(sport: Sport): MatchType {
+  if (sport === 'futbol') return 'team_vs_team'
+  if (sport === 'karting') return 'open_court'
+  return 'closed_match'
+}
+
+export function getDefaultMaxPlayers(sport: Sport): number | undefined {
+  if (sport === 'karting') return 20
+  return undefined
 }
 
 export const statusLabels: Record<string, string> = {

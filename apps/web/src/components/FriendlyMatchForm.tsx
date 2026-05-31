@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { Sport, Mode, MatchType } from '../types'
-import { footballCategoryOptions, padelCategoryOptions } from '../data/options'
+import { getCategoryOptionsForSport, getDefaultCategory, getDefaultMatchType, getDefaultMaxPlayers } from '../data/options'
 import { matchesApi } from '../api/client'
 
 interface Props {
@@ -23,14 +23,13 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const categoryOptions = sport === 'futbol' ? footballCategoryOptions : padelCategoryOptions
-  const isOpenCourt = sport === 'padel' && matchType === 'open_court'
+  const categoryOptions = getCategoryOptionsForSport(sport)
+  const isOpenCourt = (sport === 'padel' || sport === 'karting') && matchType === 'open_court'
 
   function handleSportChange(s: Sport) {
     setSport(s)
-    setCategory(s === 'futbol' ? 'Fútbol 5' : 'Pádel inicial')
-    if (s === 'futbol') setMatchType('team_vs_team')
-    else setMatchType('closed_match')
+    setCategory(getDefaultCategory(s))
+    setMatchType(getDefaultMatchType(s))
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -49,7 +48,9 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
         time: time.trim(),
         location: location.trim() || undefined,
         message: message.trim() || undefined,
-        ...(isOpenCourt ? { minPlayers: 6, maxPlayers: 8, organizerPlays } : {}),
+        ...(sport === 'karting'
+          ? { minPlayers: 4, maxPlayers: 20, organizerPlays }
+          : isOpenCourt ? { minPlayers: 6, maxPlayers: 8, organizerPlays } : {}),
       })
       onSaved()
       setSuccess(true)
@@ -95,6 +96,8 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
             <select value={sport} onChange={e => handleSportChange(e.target.value as Sport)}>
               <option value="futbol">Fútbol</option>
               <option value="padel">Pádel</option>
+              <option value="tenis">Tenis</option>
+              <option value="karting">Karting</option>
             </select>
           </label>
         </div>
@@ -123,6 +126,12 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
               <option value="open_court">Cancha abierta (6–8 jugadores)</option>
             </select>
           </label>
+        )}
+
+        {sport === 'karting' && (
+          <div className="info-banner" style={{ marginBottom: 0 }}>
+            🏎️ Carrera abierta — cupo máximo 20 pilotos. Los interesados se van sumando.
+          </div>
         )}
 
         <div className="two-cols">

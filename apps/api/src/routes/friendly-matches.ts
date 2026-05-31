@@ -9,7 +9,7 @@ export const friendlyMatchesRouter = Router()
 friendlyMatchesRouter.use('/:matchId/participants', participantsRouter)
 
 const createMatchSchema = z.object({
-  sport: z.enum(['futbol', 'padel']),
+  sport: z.enum(['futbol', 'padel', 'tenis', 'karting']),
   mode: z.enum(['masculino', 'femenino', 'mixto']),
   category: z.string().min(1),
   organizerName: z.string().min(1),

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import type { Sport, Mode, Availability } from '../types'
-import { footballCategoryOptions, padelCategoryOptions, availabilityOptions } from '../data/options'
+import { getCategoryOptionsForSport, getDefaultCategory, availabilityOptions } from '../data/options'
 import { teamsApi } from '../api/client'
 
 export interface FormPreset {
@@ -40,11 +40,11 @@ export default function TeamRegistrationForm({ onSaved, preset }: Props) {
     }
   }, [preset])
 
-  const categoryOptions = sport === 'futbol' ? footballCategoryOptions : padelCategoryOptions
+  const categoryOptions = getCategoryOptionsForSport(sport)
 
   function handleSportChange(s: Sport) {
     setSport(s)
-    setCategory(s === 'futbol' ? 'Fútbol 5' : 'Pádel inicial')
+    setCategory(getDefaultCategory(s))
   }
 
   function toggleAvailability(a: Availability) {
@@ -98,6 +98,8 @@ export default function TeamRegistrationForm({ onSaved, preset }: Props) {
             <select value={sport} onChange={e => handleSportChange(e.target.value as Sport)}>
               <option value="futbol">Fútbol</option>
               <option value="padel">Pádel</option>
+              <option value="tenis">Tenis</option>
+              <option value="karting">Karting</option>
             </select>
           </label>
           <label>

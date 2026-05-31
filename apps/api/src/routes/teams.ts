@@ -7,7 +7,7 @@ export const teamsRouter = Router()
 
 const createTeamSchema = z.object({
   teamName: z.string().min(1).max(100),
-  sport: z.enum(['futbol', 'padel']),
+  sport: z.enum(['futbol', 'padel', 'tenis', 'karting']),
   mode: z.enum(['masculino', 'femenino', 'mixto']),
   category: z.string().min(1),
   area: z.string().optional(),
