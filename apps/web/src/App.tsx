@@ -66,9 +66,10 @@ export default function App() {
     }, 50)
   }
 
-  const featuredMatch = matches.find(m => m.matchType !== 'open_court' && m.status !== 'cancelado')
-  const regularMatches = matches.filter(m => m.matchType !== 'open_court')
-  const openCourtMatches = matches.filter(m => m.matchType === 'open_court')
+  const featuredMatch = matches.find(m => m.matchType !== 'open_court' && m.sport !== 'karting' && m.status !== 'cancelado')
+  const regularMatches = matches.filter(m => m.matchType !== 'open_court' && m.sport !== 'karting')
+  const openCourtMatches = matches.filter(m => m.matchType === 'open_court' && m.sport !== 'karting')
+  const kartingMatches = matches.filter(m => m.sport === 'karting')
 
   return (
     <>
@@ -146,6 +147,18 @@ export default function App() {
             </div>
           </div>
           <OpenCourtList matches={openCourtMatches} onJoin={handleJoinCourt} onCreateCourt={handleCreateCourt} />
+        </section>
+
+        <hr className="section-divider" />
+
+        <section id="karting">
+          <div className="section-head">
+            <div>
+              <h2>🏎️ Carreras de Karting</h2>
+              <p>Carreras abiertas entre compañeros de trabajo. Cupo máximo 20 pilotos. Sumate a una o armá la tuya.</p>
+            </div>
+          </div>
+          <FriendlyMatchList matches={kartingMatches} onInterest={handleInterest} onRevert={handleRevert} onDelete={handleDeleteMatch} />
         </section>
 
         <Footer />

@@ -48,11 +48,12 @@ export default function Header() {
         <BrandLogo />
         <div>After Office Sports</div>
       </div>
-      <nav className="top-actions">
+      <nav className="header-nav">
         <a href="#torneos" className="btn btn-secondary">Torneos</a>
         <a href="#equipos" className="btn btn-secondary">Equipos inscriptos</a>
         <a href="#amistosos" className="btn btn-secondary">Amistosos</a>
         <a href="#canchas-abiertas" className="btn btn-secondary">Canchas abiertas</a>
+        <a href="#karting" className="btn btn-secondary">🏎️ Karting</a>
         <a href="#inscripcion-torneo" className="btn btn-primary">Inscribir equipo</a>
       </nav>
     </header>
