@@ -13,11 +13,17 @@ const createMatchSchema = z.object({
   mode: z.enum(['masculino', 'femenino', 'mixto']),
   category: z.string().min(1),
   organizerName: z.string().min(1),
-  organizerContact: z.string().min(1),
+  organizerContact: z.string().min(1).refine(
+    v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || /^\+?\d[\d\s\-()]{6,}$/.test(v),
+    { message: 'Debe ser un email o teléfono válido' }
+  ),
   organizerType: z.enum(['persona', 'dupla', 'equipo']).default('persona'),
   matchType: z.enum(['team_vs_team', 'closed_match', 'open_court']).default('team_vs_team'),
   date: z.string().min(1),
-  time: z.string().min(1),
+  time: z.string().min(1).refine(
+    v => /^\d{1,2}([.:h]\d{0,2})?\s*(hs?|am|pm)?$/i.test(v.trim()),
+    { message: 'Formato de hora inválido (ej: 19:30, 19 hs)' }
+  ),
   location: z.string().optional(),
   message: z.string().optional(),
   minPlayers: z.number().int().min(1).max(30).optional(),

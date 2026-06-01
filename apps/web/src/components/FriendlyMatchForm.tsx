@@ -79,8 +79,8 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
             <input type="text" placeholder="Ej: Juan o Equipo de Marketing" required value={organizerName} onChange={e => setOrganizerName(e.target.value)} />
           </label>
           <label>
-            Contacto
-            <input type="text" placeholder="Mail o WhatsApp" required value={organizerContact} onChange={e => setOrganizerContact(e.target.value)} />
+            Contacto (mail o teléfono)
+            <input type="text" placeholder="Ej: juan@mail.com o 1150616764" required value={organizerContact} onChange={e => setOrganizerContact(e.target.value)} pattern="^([^\s@]+@[^\s@]+\.[^\s@]+|\+?\d[\d\s\-()]{6,})$" title="Ingresá un email o número de teléfono válido" />
           </label>
         </div>
         <div className="two-cols">
@@ -139,12 +139,12 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
 
         <div className="two-cols">
           <label>
-            Día
-            <input type="text" placeholder="Ej: Jueves" required value={date} onChange={e => setDate(e.target.value)} />
+            Fecha
+            <input type="date" required value={date} onChange={e => setDate(e.target.value)} />
           </label>
           <label>
             Horario
-            <input type="text" placeholder="Ej: 19:30" required value={time} onChange={e => setTime(e.target.value)} />
+            <input type="time" required value={time} onChange={e => setTime(e.target.value)} />
           </label>
         </div>
         <label>

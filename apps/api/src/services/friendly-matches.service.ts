@@ -42,8 +42,8 @@ export async function getMatch(id: string) {
 }
 
 export async function createMatch(data: CreateMatchDto) {
-  if (data.matchType === 'open_court' && data.sport !== 'padel') {
-    throw new ApiError(400, 'Cancha abierta solo disponible para pádel')
+  if (data.matchType === 'open_court' && data.sport !== 'padel' && data.sport !== 'karting') {
+    throw new ApiError(400, 'Formato abierto solo disponible para pádel y karting')
   }
 
   // Check if organizer already has an active match
