@@ -19,6 +19,7 @@ export default function KartingSection({ matches, onCreated, onJoin, onDelete }:
   const [time, setTime] = useState('')
   const [location, setLocation] = useState('')
   const [message, setMessage] = useState('')
+  const [organizerPlays, setOrganizerPlays] = useState(true)
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
@@ -42,7 +43,7 @@ export default function KartingSection({ matches, onCreated, onJoin, onDelete }:
         message: message.trim() || undefined,
         minPlayers: 4,
         maxPlayers: 20,
-        organizerPlays: true,
+        organizerPlays,
       }
       await matchesApi.create(data)
       onCreated()
