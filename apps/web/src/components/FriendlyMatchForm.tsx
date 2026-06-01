@@ -30,6 +30,7 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
     setSport(s)
     setCategory(getDefaultCategory(s))
     setMatchType(getDefaultMatchType(s))
+    if (s === 'karting') setMode('mixto')
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -101,15 +102,17 @@ export default function FriendlyMatchForm({ onSaved }: Props) {
             </select>
           </label>
         </div>
-        <div className="two-cols">
-          <label>
-            Modalidad
-            <select value={mode} onChange={e => setMode(e.target.value as Mode)}>
-              <option value="masculino">Masculino</option>
-              <option value="femenino">Femenino</option>
-              <option value="mixto">Mixto</option>
-            </select>
-          </label>
+        <div className={sport === 'karting' ? '' : 'two-cols'}>
+          {sport !== 'karting' && (
+            <label>
+              Modalidad
+              <select value={mode} onChange={e => setMode(e.target.value as Mode)}>
+                <option value="masculino">Masculino</option>
+                <option value="femenino">Femenino</option>
+                <option value="mixto">Mixto</option>
+              </select>
+            </label>
+          )}
           <label>
             Categoría
             <select value={category} onChange={e => setCategory(e.target.value)}>

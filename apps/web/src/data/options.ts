@@ -48,9 +48,6 @@ export const sportTabs: TabItem[] = [
   { sport: 'tenis', mode: 'masculino', label: 'Tenis masculino', sub: 'Singles, Dobles' },
   { sport: 'tenis', mode: 'femenino', label: 'Tenis femenino', sub: 'Singles, Dobles' },
   { sport: 'tenis', mode: 'mixto', label: 'Tenis mixto', sub: 'Singles, Dobles' },
-  { sport: 'karting', mode: 'masculino', label: 'Karting masculino', sub: 'Hasta 20 pilotos' },
-  { sport: 'karting', mode: 'femenino', label: 'Karting femenino', sub: 'Hasta 20 pilotos' },
-  { sport: 'karting', mode: 'mixto', label: 'Karting mixto', sub: 'Hasta 20 pilotos' },
 ]
 
 export const footballCategoryOptions = ['Fútbol 5', 'Fútbol 6', 'Fútbol 8', 'Fútbol 11']

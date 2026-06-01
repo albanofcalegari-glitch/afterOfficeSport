@@ -19,7 +19,7 @@ export default function Hero({ latestMatch, onInterest, onRevert }: HeroProps) {
           Inscribí a tu equipo en un torneo de fútbol o pádel,
           o publicá un partido amistoso para buscar rival.
         </p>
-        <div className="top-actions">
+        <div className="hero-actions">
           <a href="#inscripcion-torneo" className="btn btn-primary">🏆 Inscribir equipo</a>
           <a href="#publicar-amistoso" className="btn btn-orange">🤝 Publicar amistoso</a>
           <a href="#canchas-abiertas" className="btn btn-secondary">🎾 Canchas abiertas</a>

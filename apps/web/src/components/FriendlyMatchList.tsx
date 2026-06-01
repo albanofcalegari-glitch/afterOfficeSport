@@ -119,14 +119,48 @@ function FriendlyMatchCard({ match, onInterest, onRevert, onDelete }: {
           <button className="btn-delete-subtle" onClick={() => { setShowDelete(true); setError('') }}>🗑 Eliminar</button>
         )}
       </div>
-      <p>{match.category} {displayMode(match.mode)} · {match.date} {match.time}</p>
+      <p>{match.category}{match.sport !== 'karting' ? ` ${displayMode(match.mode)}` : ''} · {match.date} {match.time}</p>
       {match.location && <p>📍 {match.location}</p>}
       {match.message && <p>{match.message}</p>}
 
+      {/* KARTING: progress bar + participant list */}
+      {match.sport === 'karting' && (
+        <>
+          <div className="progress-section">
+            <div className="progress-label">
+              <span>🏎️ {match.participants.length}/{match.maxPlayers ?? 20} pilotos</span>
+              <span>Mínimo: {match.minPlayers ?? 4}</span>
+            </div>
+            <div className="progress-bar">
+              <div className="progress-fill" style={{ width: `${Math.round((match.participants.length / (match.maxPlayers ?? 20)) * 100)}%` }} />
+            </div>
+          </div>
+          {match.participants.length > 0 && (
+            <div className="participant-list">
+              {match.participants.map(p => (
+                <span key={p.id} className="tag">{p.name}</span>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
       {/* BUSCANDO RIVAL */}
-      {match.status === 'buscando_rival' && !showInterestForm && !showDelete && (
+      {match.status === 'buscando_rival' && !showInterestForm && !showDelete && match.sport !== 'karting' && (
         <div className="card-bottom-action">
           <button className="btn btn-primary" onClick={() => setShowInterestForm(true)}>Me interesa</button>
+        </div>
+      )}
+
+      {/* KARTING: join button */}
+      {match.sport === 'karting' && !showInterestForm && !showDelete && match.status !== 'cancha_completa' && (
+        <div className="card-bottom-action">
+          <button className="btn btn-primary" onClick={() => setShowInterestForm(true)}>🏎️ Sumarme</button>
+        </div>
+      )}
+      {match.sport === 'karting' && match.status === 'cancha_completa' && (
+        <div className="card-bottom-action">
+          <button className="btn btn-secondary" disabled>Cupo completo</button>
         </div>
       )}
 
