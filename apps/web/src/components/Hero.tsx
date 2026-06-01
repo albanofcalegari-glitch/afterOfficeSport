@@ -23,6 +23,7 @@ export default function Hero({ latestMatch, onInterest, onRevert }: HeroProps) {
           <a href="#inscripcion-torneo" className="btn btn-primary">🏆 Inscribir equipo</a>
           <a href="#publicar-amistoso" className="btn btn-orange">🤝 Publicar amistoso</a>
           <a href="#canchas-abiertas" className="btn btn-secondary">🎾 Canchas abiertas</a>
+          <a href="#karting" className="btn btn-dark">🏎️ Karting</a>
         </div>
         <div className="stats">
           <div className="stat"><strong>6</strong><span>Modalidades</span></div>

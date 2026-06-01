@@ -11,6 +11,7 @@ import RegisteredTeamsList from './components/RegisteredTeamsList'
 import FriendlyMatchForm from './components/FriendlyMatchForm'
 import FriendlyMatchList from './components/FriendlyMatchList'
 import OpenCourtList from './components/OpenCourtList'
+import KartingSection from './components/KartingSection'
 import Footer from './components/Footer'
 import { teamsApi, matchesApi } from './api/client'
 
@@ -158,7 +159,7 @@ export default function App() {
               <p>Carreras abiertas entre compañeros de trabajo. Cupo máximo 20 pilotos. Sumate a una o armá la tuya.</p>
             </div>
           </div>
-          <FriendlyMatchList matches={kartingMatches} onInterest={handleInterest} onRevert={handleRevert} onDelete={handleDeleteMatch} />
+          <KartingSection matches={kartingMatches} onCreated={refreshMatches} onJoin={handleJoinCourt} onDelete={handleDeleteMatch} />
         </section>
 
         <Footer />
