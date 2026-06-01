@@ -20,8 +20,8 @@ const createMatchSchema = z.object({
   time: z.string().min(1),
   location: z.string().optional(),
   message: z.string().optional(),
-  minPlayers: z.number().int().min(4).max(12).optional(),
-  maxPlayers: z.number().int().min(4).max(12).optional(),
+  minPlayers: z.number().int().min(1).max(30).optional(),
+  maxPlayers: z.number().int().min(1).max(30).optional(),
   organizerPlays: z.boolean().default(true),
 })
 

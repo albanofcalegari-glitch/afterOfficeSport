@@ -100,6 +100,10 @@ export default function KartingSection({ matches, onCreated, onJoin, onDelete }:
             </label>
             <div className="open-court-info">
               <p>🏎️ Cupo: <strong>4 mínimo / 20 máximo</strong></p>
+              <label style={{ flexDirection: 'row', alignItems: 'center', gap: 10, display: 'flex', cursor: 'pointer' }}>
+                <input type="checkbox" checked={organizerPlays} onChange={e => setOrganizerPlays(e.target.checked)} style={{ width: 'auto', marginRight: 4 }} />
+                Yo participo
+              </label>
             </div>
             <label>
               Comentario (opcional)
