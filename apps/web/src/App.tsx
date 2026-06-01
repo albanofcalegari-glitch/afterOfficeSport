@@ -12,6 +12,7 @@ import FriendlyMatchForm from './components/FriendlyMatchForm'
 import FriendlyMatchList from './components/FriendlyMatchList'
 import OpenCourtList from './components/OpenCourtList'
 import KartingSection from './components/KartingSection'
+import RecruitingSection from './components/RecruitingSection'
 import Footer from './components/Footer'
 import { teamsApi, matchesApi } from './api/client'
 
@@ -67,8 +68,9 @@ export default function App() {
     }, 50)
   }
 
-  const featuredMatch = matches.find(m => m.matchType !== 'open_court' && m.sport !== 'karting' && m.status !== 'cancelado')
-  const regularMatches = matches.filter(m => m.matchType !== 'open_court' && m.sport !== 'karting')
+  const featuredMatch = matches.find(m => m.matchType !== 'open_court' && m.matchType !== 'recruiting' && m.sport !== 'karting' && m.status !== 'cancelado')
+  const regularMatches = matches.filter(m => m.matchType !== 'open_court' && m.matchType !== 'recruiting' && m.sport !== 'karting')
+  const recruitingMatches = matches.filter(m => m.matchType === 'recruiting')
   const openCourtMatches = matches.filter(m => m.matchType === 'open_court' && m.sport !== 'karting')
   const kartingMatches = matches.filter(m => m.sport === 'karting')
 
@@ -136,6 +138,18 @@ export default function App() {
             </div>
           </div>
           <FriendlyMatchList matches={regularMatches} onInterest={handleInterest} onRevert={handleRevert} onDelete={handleDeleteMatch} />
+        </section>
+
+        <hr className="section-divider" />
+
+        <section id="armar-equipo">
+          <div className="section-head">
+            <div>
+              <h2>🙋 Armar equipo</h2>
+              <p>Tenés partido pero te faltan jugadores. Sumate al equipo de alguien o publicá tu búsqueda.</p>
+            </div>
+          </div>
+          <RecruitingSection matches={recruitingMatches} onCreated={refreshMatches} onJoin={handleJoinCourt} onDelete={handleDeleteMatch} />
         </section>
 
         <hr className="section-divider" />

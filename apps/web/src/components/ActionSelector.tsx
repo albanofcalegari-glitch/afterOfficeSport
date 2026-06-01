@@ -7,7 +7,7 @@ export default function ActionSelector() {
           <p>Elegí una opción para arrancar.</p>
         </div>
       </div>
-      <div className="action-selector four-cols">
+      <div className="action-selector five-cols">
         <div className="action-card green">
           <span className="action-icon">🏆</span>
           <h3>Inscribir equipo a torneo</h3>
@@ -19,6 +19,12 @@ export default function ActionSelector() {
           <h3>Publicar amistoso</h3>
           <p>Buscá rival para un partido puntual de fútbol, pádel o tenis.</p>
           <a href="#publicar-amistoso" className="btn btn-orange">Publicar amistoso</a>
+        </div>
+        <div className="action-card purple">
+          <span className="action-icon">🙋</span>
+          <h3>Armar equipo</h3>
+          <p>Tenés partido pero te faltan jugadores. Reclutá compañeros.</p>
+          <a href="#armar-equipo" className="btn btn-purple">Armar equipo</a>
         </div>
         <div className="action-card blue">
           <span className="action-icon">🎾</span>

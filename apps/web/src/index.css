@@ -152,6 +152,7 @@ header {
 .btn-orange { background: var(--orange); color: var(--text); box-shadow: 0 12px 24px rgba(255,159,28,.22); }
 .btn-blue { background: var(--blue); color: white; box-shadow: 0 12px 24px rgba(35,116,171,.22); }
 .btn-danger { background: #be123c; color: white; box-shadow: 0 12px 24px rgba(190,18,60,.22); }
+.btn-purple { background: #7c3aed; color: white; box-shadow: 0 12px 24px rgba(124,58,237,.22); }
 
 main { padding: 0 6vw 60px; }
 
@@ -408,6 +409,26 @@ h1 {
 
 .action-selector.four-cols {
   grid-template-columns: repeat(4, 1fr);
+}
+
+.action-selector.five-cols {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.action-card.purple {
+  border-color: rgba(124, 58, 237, .25);
+  box-shadow: 0 12px 32px rgba(124, 58, 237, .08);
+}
+
+.action-card.purple::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  background: rgba(124, 58, 237, .08);
+  right: -50px;
+  bottom: -50px;
 }
 
 .action-card.dark {
@@ -922,6 +943,10 @@ textarea {
   transition: width .3s ease;
 }
 
+.progress-fill-purple {
+  background: #7c3aed;
+}
+
 .participant-list {
   display: flex;
   gap: 6px;
@@ -961,6 +986,38 @@ footer {
   padding-bottom: 30px;
 }
 
+/* Sport filter pills */
+
+.sport-filter {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: white;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .15s ease;
+  color: var(--muted);
+}
+
+.filter-pill:hover {
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+
+.filter-pill.active {
+  background: #7c3aed;
+  color: white;
+  border-color: #7c3aed;
+}
+
 /* Responsive */
 
 @media (max-width: 1100px) {
@@ -971,7 +1028,8 @@ footer {
   .requests { grid-template-columns: 1fr 1fr; }
   .action-selector,
   .action-selector.three-cols,
-  .action-selector.four-cols { grid-template-columns: 1fr 1fr; }
+  .action-selector.four-cols,
+  .action-selector.five-cols { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 720px) {

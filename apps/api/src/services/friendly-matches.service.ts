@@ -2,6 +2,22 @@ import { prisma } from '../lib/prisma.js'
 import { ApiError } from '../lib/errors.js'
 import type { Sport, Mode, OrganizerType, MatchType, FriendlyMatchStatus } from '@prisma/client'
 
+function getRecruitingDefaults(sport: Sport, category: string): { min: number; max: number } {
+  if (sport === 'futbol') {
+    if (category.includes('5')) return { min: 5, max: 5 }
+    if (category.includes('6')) return { min: 6, max: 6 }
+    if (category.includes('8')) return { min: 8, max: 8 }
+    if (category.includes('11')) return { min: 11, max: 11 }
+    return { min: 5, max: 5 }
+  }
+  if (sport === 'padel') return { min: 4, max: 4 }
+  if (sport === 'tenis') {
+    if (category.toLowerCase().includes('doble')) return { min: 2, max: 2 }
+    return { min: 2, max: 2 }
+  }
+  return { min: 4, max: 8 }
+}
+
 export interface CreateMatchDto {
   sport: Sport
   mode: Mode
@@ -45,6 +61,9 @@ export async function createMatch(data: CreateMatchDto) {
   if (data.matchType === 'open_court' && data.sport !== 'padel' && data.sport !== 'karting') {
     throw new ApiError(400, 'Formato abierto solo disponible para pádel y karting')
   }
+  if (data.matchType === 'recruiting' && data.sport === 'karting') {
+    throw new ApiError(400, 'Karting usa formato carrera abierta, no reclutamiento')
+  }
 
   // Check if organizer already has an active match
   const existingActive = await prisma.friendlyMatch.findFirst({
@@ -70,12 +89,21 @@ export async function createMatch(data: CreateMatchDto) {
     throw new ApiError(400, 'Ya tenés un partido en ese día y horario.')
   }
 
-  const status: FriendlyMatchStatus = data.matchType === 'open_court'
+  const isParticipantBased = data.matchType === 'open_court' || data.matchType === 'recruiting'
+  const status: FriendlyMatchStatus = isParticipantBased
     ? 'juntando_jugadores'
     : 'buscando_rival'
 
-  const minPlayers = data.matchType === 'open_court' ? (data.minPlayers ?? 6) : null
-  const maxPlayers = data.matchType === 'open_court' ? (data.maxPlayers ?? 8) : null
+  let minPlayers: number | null = null
+  let maxPlayers: number | null = null
+  if (data.matchType === 'open_court') {
+    minPlayers = data.minPlayers ?? 6
+    maxPlayers = data.maxPlayers ?? 8
+  } else if (data.matchType === 'recruiting') {
+    const defaults = getRecruitingDefaults(data.sport, data.category)
+    minPlayers = data.minPlayers ?? defaults.min
+    maxPlayers = data.maxPlayers ?? defaults.max
+  }
 
   const match = await prisma.friendlyMatch.create({
     data: {
@@ -98,7 +126,7 @@ export async function createMatch(data: CreateMatchDto) {
     include: { participants: true },
   })
 
-  if (data.matchType === 'open_court' && data.organizerPlays !== false) {
+  if (isParticipantBased && data.organizerPlays !== false) {
     await prisma.openCourtParticipant.create({
       data: {
         friendlyMatchId: match.id,
@@ -146,8 +174,8 @@ export async function updateMatchStatus(id: string, data: UpdateStatusDto) {
 export async function deleteMatch(id: string, organizerContact: string) {
   const match = await prisma.friendlyMatch.findUnique({ where: { id } })
   if (!match) throw new ApiError(404, 'Partido no encontrado')
-  if (match.status !== 'buscando_rival') {
-    throw new ApiError(400, 'Solo se puede eliminar un desafío que todavía no tiene rival')
+  if (match.status !== 'buscando_rival' && match.status !== 'juntando_jugadores') {
+    throw new ApiError(400, 'Solo se puede eliminar un partido que todavía está armándose')
   }
   if (match.organizerContact.toLowerCase() !== organizerContact.trim().toLowerCase()) {
     throw new ApiError(403, 'El contacto no coincide con el organizador')

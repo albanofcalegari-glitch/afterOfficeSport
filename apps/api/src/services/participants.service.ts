@@ -22,7 +22,7 @@ export async function addParticipant(matchId: string, data: CreateParticipantDto
   })
 
   if (!match) throw new ApiError(404, 'Partido no encontrado')
-  if (match.matchType !== 'open_court') throw new ApiError(400, 'Solo canchas abiertas aceptan participantes')
+  if (match.matchType !== 'open_court' && match.matchType !== 'recruiting') throw new ApiError(400, 'Solo canchas abiertas y reclutamiento aceptan participantes')
   if (match.status === 'cancelado') throw new ApiError(400, 'Partido cancelado')
 
   const max = match.maxPlayers ?? 8

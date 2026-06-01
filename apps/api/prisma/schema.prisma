@@ -30,6 +30,7 @@ enum MatchType {
   team_vs_team
   closed_match
   open_court
+  recruiting
 }
 
 enum FriendlyMatchStatus {

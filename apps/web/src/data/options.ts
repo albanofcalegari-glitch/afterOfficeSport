@@ -108,6 +108,29 @@ export function getDefaultMaxPlayers(sport: Sport): number | undefined {
   return undefined
 }
 
+export function getRecruitingDefaults(sport: Sport, category: string): { min: number; max: number } {
+  if (sport === 'futbol') {
+    if (category.includes('5')) return { min: 5, max: 5 }
+    if (category.includes('6')) return { min: 6, max: 6 }
+    if (category.includes('8')) return { min: 8, max: 8 }
+    if (category.includes('11')) return { min: 11, max: 11 }
+    return { min: 5, max: 5 }
+  }
+  if (sport === 'padel') return { min: 4, max: 4 }
+  if (sport === 'tenis') {
+    if (category.toLowerCase().includes('doble')) return { min: 2, max: 2 }
+    return { min: 2, max: 2 }
+  }
+  return { min: 4, max: 8 }
+}
+
+export function getRecruitingCategoryOptions(sport: Sport): string[] {
+  if (sport === 'futbol') return footballCategoryOptions
+  if (sport === 'padel') return padelCategoryOptions.filter(c => c !== 'Busco dupla')
+  if (sport === 'tenis') return tennisCategoryOptions.filter(c => c !== 'Busco rival')
+  return []
+}
+
 export const statusLabels: Record<string, string> = {
   buscando_rival: 'Buscando rival',
   rival_interesado: 'Rival interesado',

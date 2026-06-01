@@ -18,7 +18,7 @@ const createMatchSchema = z.object({
     { message: 'Debe ser un email o teléfono válido' }
   ),
   organizerType: z.enum(['persona', 'dupla', 'equipo']).default('persona'),
-  matchType: z.enum(['team_vs_team', 'closed_match', 'open_court']).default('team_vs_team'),
+  matchType: z.enum(['team_vs_team', 'closed_match', 'open_court', 'recruiting']).default('team_vs_team'),
   date: z.string().min(1),
   time: z.string().min(1).refine(
     v => /^\d{1,2}([.:h]\d{0,2})?\s*(hs?|am|pm)?$/i.test(v.trim()),

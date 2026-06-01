@@ -1,7 +1,7 @@
 export type Sport = 'futbol' | 'padel' | 'tenis' | 'karting'
 export type Mode = 'masculino' | 'femenino' | 'mixto'
 export type OrganizerType = 'persona' | 'dupla' | 'equipo'
-export type MatchType = 'team_vs_team' | 'closed_match' | 'open_court'
+export type MatchType = 'team_vs_team' | 'closed_match' | 'open_court' | 'recruiting'
 export type FriendlyMatchStatus =
   | 'buscando_rival'
   | 'rival_interesado'
