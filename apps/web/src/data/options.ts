@@ -28,7 +28,6 @@ export const tennisCategories: CategoryItem[] = [
 
 export const kartingCategories: CategoryItem[] = [
   { title: 'Karting recreativo', desc: 'Carrera entre amigos o compañeros de trabajo, sin presión.', tags: ['Hasta 20 pilotos', 'Social', 'After office'] },
-  { title: 'Karting competitivo', desc: 'Carrera con tiempos, clasificación y podio.', tags: ['Hasta 20 pilotos', 'Ranking', 'Cronometrado'] },
 ]
 
 export interface TabItem {
@@ -53,7 +52,7 @@ export const sportTabs: TabItem[] = [
 export const footballCategoryOptions = ['Fútbol 5', 'Fútbol 6', 'Fútbol 8', 'Fútbol 11']
 export const padelCategoryOptions = ['Pádel inicial', 'Pádel intermedio', 'Pádel avanzado']
 export const tennisCategoryOptions = ['Tenis singles', 'Tenis dobles', 'Busco rival']
-export const kartingCategoryOptions = ['Karting recreativo', 'Karting competitivo']
+export const kartingCategoryOptions = ['Karting recreativo']
 export const allCategoryOptions = [...footballCategoryOptions, ...padelCategoryOptions, ...tennisCategoryOptions, ...kartingCategoryOptions]
 
 export const availabilityOptions: { value: Availability; label: string }[] = [

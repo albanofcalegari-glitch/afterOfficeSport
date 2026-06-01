@@ -406,6 +406,26 @@ h1 {
   grid-template-columns: repeat(3, 1fr);
 }
 
+.action-selector.four-cols {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.action-card.dark {
+  border-color: rgba(23, 33, 29, .2);
+  box-shadow: 0 12px 32px rgba(23, 33, 29, .08);
+}
+
+.action-card.dark::after {
+  content: "";
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  border-radius: 999px;
+  background: rgba(23, 33, 29, .06);
+  right: -50px;
+  bottom: -50px;
+}
+
 /* Form badges */
 
 .form-badge {
@@ -950,7 +970,8 @@ footer {
   .tabs { grid-template-columns: repeat(3, 1fr); }
   .requests { grid-template-columns: 1fr 1fr; }
   .action-selector,
-  .action-selector.three-cols { grid-template-columns: 1fr 1fr; }
+  .action-selector.three-cols,
+  .action-selector.four-cols { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 720px) {

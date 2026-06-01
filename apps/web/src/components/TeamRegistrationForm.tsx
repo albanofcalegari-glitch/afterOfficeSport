@@ -99,7 +99,6 @@ export default function TeamRegistrationForm({ onSaved, preset }: Props) {
               <option value="futbol">Fútbol</option>
               <option value="padel">Pádel</option>
               <option value="tenis">Tenis</option>
-              <option value="karting">Karting</option>
             </select>
           </label>
           <label>
