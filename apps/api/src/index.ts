@@ -25,7 +25,7 @@ app.use('/api/friendly-matches', friendlyMatchesRouter)
 
 app.use(express.static(webDist))
 
-app.get('*', (_req, res) => {
+app.get('{*path}', (_req, res) => {
   res.sendFile(path.join(webDist, 'index.html'))
 })
 

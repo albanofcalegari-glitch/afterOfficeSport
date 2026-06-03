@@ -568,6 +568,10 @@ h2 {
   box-shadow: 0 12px 32px rgba(24, 36, 30, .06);
 }
 
+.form-card {
+  max-width: 640px;
+}
+
 .request-card {
   display: flex;
   flex-direction: column;
@@ -986,6 +990,66 @@ footer {
   padding-bottom: 30px;
 }
 
+.qr-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 20px 28px;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 8px 20px rgba(24, 36, 30, .05);
+}
+
+.qr-section canvas {
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.qr-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.qr-info strong {
+  font-size: 15px;
+  color: var(--text);
+  letter-spacing: -.02em;
+}
+
+.qr-info span {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.4;
+}
+
+.btn-download-qr {
+  border: 0;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 800;
+  font-size: 12px;
+  cursor: pointer;
+  background: var(--text);
+  color: white;
+  transition: transform .2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+}
+
+.btn-download-qr:hover {
+  transform: translateY(-1px);
+}
+
 /* Sport filter pills */
 
 .sport-filter {
@@ -1089,6 +1153,14 @@ footer {
     width: 100%;
     min-width: auto;
   }
-  section { padding: 0 5vw; }
+  .form-card { padding: 16px; max-width: none; }
+  .qr-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 18px;
+    max-width: none;
+  }
+  .qr-info { text-align: center; align-items: center; }
+  .btn-download-qr { align-self: center; }
   .section-head h2 { font-size: 22px; }
 }
